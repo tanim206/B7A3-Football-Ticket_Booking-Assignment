@@ -8,7 +8,11 @@ drop table if exists Users;
 drop table if exists Matches;
 drop table if exists Bookings;
 
+-- ======================================
+-- Database Create
 create database football_ticket_booking;
+-- ======================================
+
 
 -- 1. CREATE "USERS" TABLE
 create table Users (
