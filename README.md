@@ -1,4 +1,4 @@
-# ⚽ Football Ticket Booking System (Database Design & SQL Assignment)
+﻿# ⚽ Football Ticket Booking System (Database Design & SQL Assignment)
 
 ## 📌 Project Overview & Objectives
 
@@ -15,45 +15,48 @@ The database consists of three core tables linked together by standard relationa
 ### 1. Users Table
 
 Tracks all system administrators, ticket managers, and football fans.
-| Field Name | Data Type | Description |
-| :--- | :--- | :--- |
-| `user_id` (PK) | `SERIAL` | Unique identification number for each user. |
-| `full_name` | `VARCHAR(40)` | First and last name of the user. |
-| `email` | `VARCHAR(20)` | Unique email address used for login authentication. |
-| `role` | `VARCHAR(20)` | System role restrictions (`Ticket Manager` or `Football Fan`). |
-| `phone_number` | `VARCHAR(20)` | Contact mobile number (Supports `NULL` values). |
+
+| Field Name     | Data Type     | Description                                                 |
+| -------------- | ------------- | ----------------------------------------------------------- |
+| `user_id` (PK) | `SERIAL`      | Unique identification number for each user.                 |
+| `full_name`    | `VARCHAR(40)` | First and last name of the user.                            |
+| `email`        | `VARCHAR(20)` | Unique email address used for login authentication.         |
+| `role`         | `VARCHAR(20)` | System role restrictions (`Ticket Manager` or `Football Fan`). |
+| `phone_number` | `VARCHAR(20)` | Contact mobile number (supports `NULL`).                    |
 
 ### 2. Matches Table
 
-Catalogs the tournament events, stadium logistics, and baseline ticket pricing.
-| Field Name | Data Type | Description |
-| :--- | :--- | :--- |
-| `match_id` (PK) | `SERIAL` | Unique identification number for each football match. |
-| `fixture` | `VARCHAR(100)` | Competing teams (e.g., Real Madrid vs Barcelona). |
-| `tournament_category`| `VARCHAR(50)` | The league/cup title (e.g., Champions League, Premier League). |
-| `base_ticket_price` | `DECIMAL(10,2)`| The foundational price for a single standard entry seat. |
-| `match_status` | `VARCHAR(20)` | Ticket state (`Available`, `Selling Fast`, `Sold Out`, `Postponed`). |
+Catalogs tournament events, stadium logistics, and baseline ticket pricing.
+
+| Field Name            | Data Type        | Description                                                      |
+| --------------------- | ---------------- | ---------------------------------------------------------------- |
+| `match_id` (PK)       | `SERIAL`         | Unique identification number for each football match.            |
+| `fixture`             | `VARCHAR(100)`   | Competing teams (e.g., Real Madrid vs Barcelona).                |
+| `tournament_category` | `VARCHAR(50)`    | The league/cup title (e.g., Champions League, Premier League).   |
+| `base_ticket_price`   | `DECIMAL(10,2)`  | Base price for a standard entry seat.                            |
+| `match_status`        | `VARCHAR(20)`    | Ticket state (`Available`, `Selling Fast`, `Sold Out`, `Postponed`). |
 
 ### 3. Bookings Table
 
-A transactional table recording individual seat purchases linking users to matches.
-| Field Name | Data Type | Description |
-| :--- | :--- | :--- |
-| `booking_id` (PK)| `SERIAL` | Unique tracking transaction invoice number. |
-| `user_id` (FK) | `INT` | Links the booking directly to the `Users` table. |
-| `match_id` (FK) | `INT` | Links the booking directly to the `Matches` table. |
-| `seat_number` | `VARCHAR(10)` | Specific allocated stadium seat identifier (e.g., A-12). |
-| `payment_status` | `VARCHAR(20)` | Financial resolution (`Pending`, `Confirmed`, `Cancelled`, `Refunded`). |
-| `total_cost` | `DECIMAL(10,2)`| Calculated final invoice price based on baseline pricing. |
+Records individual seat purchases, linking users to matches.
+
+| Field Name      | Data Type       | Description                                                   |
+| --------------- | --------------- | ------------------------------------------------------------- |
+| `booking_id` (PK)| `SERIAL`       | Unique booking transaction invoice number.                    |
+| `user_id` (FK)  | `INT`           | References the `Users` table.                                 |
+| `match_id` (FK) | `INT`           | References the `Matches` table.                               |
+| `seat_number`   | `VARCHAR(10)`   | Stadium seat identifier (e.g., A-12).                         |
+| `payment_status`| `VARCHAR(20)`   | Payment state (`Pending`, `Confirmed`, `Cancelled`, `Refunded`). |
+| `total_cost`    | `DECIMAL(10,2)` | Final invoice amount based on base pricing.                   |
 
 ---
 
-## 📊 Sample Datasets (Seeded Values)
+## 📊 Sample Dataset
 
 ### Users Table
 
 | user_id | full_name       | email           | role           | phone_number   |
-| :------ | :-------------- | :-------------- | :------------- | :------------- |
+| ------- | --------------- | --------------- | -------------- | -------------- |
 | 1       | Tanvir Rahman   | tanvir@mail.com | Football Fan   | +8801711111111 |
 | 2       | Asif Haque      | asif@mail.com   | Football Fan   | +8801722222222 |
 | 3       | Sajjad Rahman   | sajjad@mail.com | Ticket Manager | +8801733333333 |
@@ -72,13 +75,13 @@ A transactional table recording individual seat purchases linking users to match
 | 16      | Mark Taylor     | mark@mail.com   | Football Fan   | +8801844444444 |
 | 17      | Sophia Lee      | sophia@mail.com | Football Fan   | _NULL_         |
 | 18      | Daniel Martinez | daniel@mail.com | Football Fan   | +8801855555555 |
-| 19      | Emma Brown      | emma@mail.com   | Football Fan   | _NULL_         |
+| 19      | Emma Brown      | emma@mail.com  | Football Fan   | _NULL_         |
 | 20      | John Smith      | john@mail.com   | Ticket Manager | +8801877777777 |
 
 ### Matches Table
 
 | match_id | fixture                      | tournament_category | base_ticket_price | match_status |
-| :------- | :--------------------------- | :------------------ | :---------------- | :----------- |
+| -------- | ---------------------------- | ------------------ | ----------------- | ------------ |
 | 101      | Real Madrid vs Barcelona     | Champions League    | 150.00            | Available    |
 | 102      | Man City vs Liverpool        | Premier League      | 120.00            | Selling Fast |
 | 103      | Bayern Munich vs PSG         | Champions League    | 130.00            | Available    |
@@ -93,7 +96,7 @@ A transactional table recording individual seat purchases linking users to match
 ### Bookings Table
 
 | booking_id | user_id | match_id | seat_number | payment_status | total_cost |
-| :--------- | :------ | :------- | :---------- | :------------- | :--------- |
+| ---------- | ------- | -------- | ----------- | -------------- | ---------- |
 | 501        | 1       | 101      | A-12        | Confirmed      | 150.00     |
 | 502        | 1       | 102      | B-04        | Confirmed      | 120.00     |
 | 503        | 2       | 101      | A-13        | Refunded       | 150.00     |
@@ -114,9 +117,9 @@ A transactional table recording individual seat purchases linking users to match
 
 ## 🔍 SQL Queries & Expected Output
 
-### Query 1: Retrieve all upcoming football matches belonging to the 'Champions League' where the match status is 'Available'.
+### Query 1: Champions League matches with status `Available`
 
-````sql
+```sql
 SELECT
     match_id,
     fixture,
@@ -124,16 +127,7 @@ SELECT
 FROM matches
 WHERE tournament_category = 'Champions League'
   AND match_status = 'Available';
-
-
-### Query 2: Search for all users whose full names start with 'Tanvir' or contain the phrase 'Haque' (case-insensitive).
-
-```sql
-SELECT user_id, full_name, email
-FROM users
-WHERE full_name LIKE 'Tanvir%'
-   OR full_name LIKE '%Haque%';
-````
+```
 
 #### Expected Output
 
@@ -145,6 +139,15 @@ WHERE full_name LIKE 'Tanvir%'
 
 ---
 
+### Query 2: Search users by name pattern
+
+```sql
+SELECT user_id, full_name, email
+FROM users
+WHERE full_name LIKE 'Tanvir%'
+   OR full_name LIKE '%Haque%';
+```
+
 #### Expected Output
 
 | user_id | full_name     | email                                     |
@@ -154,13 +157,13 @@ WHERE full_name LIKE 'Tanvir%'
 
 ---
 
-### Query 3: Retrieve all booking records where the payment status is missing (NULL), replacing the empty result with 'Action Required'.
+### Query 3: Bookings with missing payment status
 
 ```sql
 SELECT booking_id,
        user_id,
        match_id,
-       COALESCE(payment_status,'Action Required') AS systematic_status
+       COALESCE(payment_status, 'Action Required') AS systematic_status
 FROM bookings
 WHERE payment_status IS NULL;
 ```
@@ -175,7 +178,7 @@ WHERE payment_status IS NULL;
 
 ---
 
-### Query 4: Retrieve match booking details along with the User's full name and the scheduled Match fixture teams.
+### Query 4: Match booking details with user and fixture
 
 ```sql
 SELECT bookings.booking_id,
@@ -184,9 +187,9 @@ SELECT bookings.booking_id,
        ROUND(bookings.total_cost) AS total_cost
 FROM bookings
 INNER JOIN matches
-ON bookings.match_id = matches.match_id
+    ON bookings.match_id = matches.match_id
 INNER JOIN users
-ON bookings.user_id = users.user_id;
+    ON bookings.user_id = users.user_id;
 ```
 
 #### Expected Output (Sample)
@@ -201,7 +204,7 @@ ON bookings.user_id = users.user_id;
 
 ---
 
-### Query 5: Display a comprehensive list of all users and their booking IDs, ensuring that fans who have never bought a ticket are still listed.
+### Query 5: All users with bookings (including users without tickets)
 
 ```sql
 SELECT users.user_id,
@@ -209,7 +212,7 @@ SELECT users.user_id,
        bookings.booking_id
 FROM users
 LEFT JOIN bookings
-ON bookings.user_id = users.user_id;
+    ON bookings.user_id = users.user_id;
 ```
 
 #### Expected Output (Sample)
@@ -224,15 +227,14 @@ ON bookings.user_id = users.user_id;
 
 ---
 
-### Query 6: Find all ticket bookings where the total cost is strictly higher than the average cost of all ticket bookings.
+### Query 6: Bookings above average total cost
 
 ```sql
 SELECT booking_id,
        match_id,
        ROUND(total_cost) AS total_cost
 FROM bookings
-WHERE total_cost >
-(
+WHERE total_cost > (
     SELECT AVG(total_cost)
     FROM bookings
 );
@@ -252,7 +254,7 @@ WHERE total_cost >
 
 ---
 
-### Query 7: Retrieve the top 2 most expensive matches sorted by base ticket price, skipping the absolute highest premium match.
+### Query 7: Top 2 most expensive matches, skipping the highest priced one
 
 ```sql
 SELECT match_id,
@@ -269,7 +271,3 @@ LIMIT 2 OFFSET 1;
 | -------- | ------------------------ | ----------------- |
 | 101      | Real Madrid vs Barcelona | 150               |
 | 107      | PSG vs Dortmund          | 140               |
-
-```
-
-```
