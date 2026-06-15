@@ -119,16 +119,6 @@ Records individual seat purchases, linking users to matches.
 
 ### Query 1: Champions League matches with status `Available`
 
-```sql
-SELECT
-    match_id,
-    fixture,
-    ROUND(base_ticket_price) AS base_ticket_price
-FROM matches
-WHERE tournament_category = 'Champions League'
-  AND match_status = 'Available';
-```
-
 #### Expected Output
 
 | match_id | fixture                  | base_ticket_price |
@@ -141,13 +131,6 @@ WHERE tournament_category = 'Champions League'
 
 ### Query 2: Search users by name pattern
 
-```sql
-SELECT user_id, full_name, email
-FROM users
-WHERE full_name LIKE 'Tanvir%'
-   OR full_name LIKE '%Haque%';
-```
-
 #### Expected Output
 
 | user_id | full_name     | email                                     |
@@ -159,14 +142,6 @@ WHERE full_name LIKE 'Tanvir%'
 
 ### Query 3: Bookings with missing payment status
 
-```sql
-SELECT booking_id,
-       user_id,
-       match_id,
-       COALESCE(payment_status, 'Action Required') AS systematic_status
-FROM bookings
-WHERE payment_status IS NULL;
-```
 
 #### Expected Output
 
@@ -179,18 +154,6 @@ WHERE payment_status IS NULL;
 ---
 
 ### Query 4: Match booking details with user and fixture
-
-```sql
-SELECT bookings.booking_id,
-       users.full_name,
-       matches.fixture,
-       ROUND(bookings.total_cost) AS total_cost
-FROM bookings
-INNER JOIN matches
-    ON bookings.match_id = matches.match_id
-INNER JOIN users
-    ON bookings.user_id = users.user_id;
-```
 
 #### Expected Output (Sample)
 
@@ -206,15 +169,6 @@ INNER JOIN users
 
 ### Query 5: All users with bookings (including users without tickets)
 
-```sql
-SELECT users.user_id,
-       users.full_name,
-       bookings.booking_id
-FROM users
-LEFT JOIN bookings
-    ON bookings.user_id = users.user_id;
-```
-
 #### Expected Output (Sample)
 
 | user_id | full_name     | booking_id |
@@ -228,17 +182,6 @@ LEFT JOIN bookings
 ---
 
 ### Query 6: Bookings above average total cost
-
-```sql
-SELECT booking_id,
-       match_id,
-       ROUND(total_cost) AS total_cost
-FROM bookings
-WHERE total_cost > (
-    SELECT AVG(total_cost)
-    FROM bookings
-);
-```
 
 #### Expected Output
 
@@ -255,15 +198,6 @@ WHERE total_cost > (
 ---
 
 ### Query 7: Top 2 most expensive matches, skipping the highest priced one
-
-```sql
-SELECT match_id,
-       fixture,
-       ROUND(base_ticket_price) AS base_ticket_price
-FROM matches
-ORDER BY base_ticket_price DESC
-LIMIT 2 OFFSET 1;
-```
 
 #### Expected Output
 
